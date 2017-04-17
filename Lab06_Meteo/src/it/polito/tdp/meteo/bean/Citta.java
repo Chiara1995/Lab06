@@ -2,6 +2,8 @@ package it.polito.tdp.meteo.bean;
 
 import java.util.List;
 
+//Informazioni aggiuntive relative alla città
+
 public class Citta {
 
 	private String nome;
