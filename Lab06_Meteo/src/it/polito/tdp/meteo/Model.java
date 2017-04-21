@@ -17,13 +17,16 @@ public class Model {
 	private final static int NUMERO_GIORNI_CITTA_MAX = 6;
 	private final static int NUMERO_GIORNI_TOTALI = 15;
 	
-	List<Citta> citta=null;
+	private List<Citta> citta=null;
+	private List<SimpleCity> solution=null;
 	
 	public Model() {
 		citta=new ArrayList<Citta>();
 	}
 
 	public String getUmiditaMedia(int mese) {
+		if(mese<1 || mese>12)
+			return "Errore: formato mese non valido.";
 		MeteoDAO mdao=new MeteoDAO();
 		String ris="";
 		ris+="Torino "+mdao.getAvgRilevamentiLocalitaMese(mese, "Torino")+"\n";
@@ -33,7 +36,9 @@ public class Model {
 	}
 
 	public String trovaSequenza(int mese) {
-		List<SimpleCity> solution=new ArrayList<SimpleCity>();
+		if(mese<1 || mese>12)
+			return "Errore: formato mese non valido.";
+		solution=new ArrayList<SimpleCity>();
 		solution.add(new SimpleCity("BaseAlgoritmo",Integer.MAX_VALUE));
 		int step=1;
 		List<SimpleCity> parziale=new ArrayList<SimpleCity>();
@@ -57,7 +62,7 @@ public class Model {
 		
 		//Controllo della condizione di terminazione
 		if(step>NUMERO_GIORNI_TOTALI){
-			if( controllaParziale(parziale)){
+			if(controllaParziale(parziale)){
 				if(punteggioSoluzione(parziale)<punteggioSoluzione(solution)){
 					solution.clear();
 					solution.addAll(parziale);
